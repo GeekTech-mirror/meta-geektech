@@ -18,6 +18,7 @@ do_configure:prepend() {
     QMAKE_CFLAGS            = -lEGL -ldl -lglib-2.0 -lpthread
     QMAKE_CXXFLAGS          = $$QMAKE_CFLAGS -lGLESv2 -lgsl
 
+    # Preferred eglfs backend
     EGLFS_DEVICE_INTEGRATION = eglfs_kms
 
     QT_QPA_DEFAULT_PLATFORM = eglfs
