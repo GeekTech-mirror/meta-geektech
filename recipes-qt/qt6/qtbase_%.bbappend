@@ -6,7 +6,7 @@ PACKAGECONFIG_FONTS:rpi = "fontconfig"
 PACKAGECONFIG:append:rpi = " gbm libinput tslib xkbcommon"
 
 # try gles with x11
-PACKAGECONFIG += " cups glib sql-sqlite" 
+PACKAGECONFIG += " cups gles glib sql-sqlite" 
 PACKAGECONFIG += " ${@bb.utils.contains('MACHINE_FEATURES', 'vc4graphics', ' kms', '', d)}"
 
 do_configure:prepend() {
