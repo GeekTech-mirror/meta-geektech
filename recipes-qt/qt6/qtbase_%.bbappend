@@ -1,5 +1,5 @@
-# Set whether to use build opengl for 'x11', 'eglfs', and/or 'kms'
-PACKAGECONFIG_GL:rpi = 
+# Set whether to configure opengl for 'x11', 'eglfs', and/or 'kms'
+PACKAGECONFIG_GL:rpi = \
     "${@bb.utils.contains('DISTRO_FEATURES', 'x11 opengl', 'gl', \
         bb.utils.contains('DISTRO_FEATURES', 'opengl', 'eglfs gles2', '', d), d)}"
 PACKAGECONFIG_GL:append:rpi = " ${@bb.utils.contains('MACHINE_FEATURES', 'vc4graphics', ' kms', '', d)}"
@@ -15,12 +15,6 @@ OE_QTBASE_EGLFS_DEVICE_INTEGRATION:rpi = "${@bb.utils.contains('MACHINE_FEATURES
 # Set addition specs for the raspberry pi
 do_configure:prepend() {
     cat > ${S}/mkspecs/oe-device-extra.pri << EOF
-    QMAKE_LIBS_EGL += -lEGL
-    QMAKE_LIBS_OPENGL_ES2 += -lGLESv2 -lEGL
-
-    DISTRO_OPTS += hard-float
-    DISTRO_OPTS += deb-multi-arch
-
     # Preferred backend
     QT_QPA_DEFAULT_PLATFORM = eglfs
 
