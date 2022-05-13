@@ -6,6 +6,7 @@ PACKAGECONFIG_GL:append:rpi = " ${@bb.utils.contains('MACHINE_FEATURES', 'vc4gra
 PACKAGECONFIG_GL:append:rpi = " gbm"
 PACKAGECONFIG_FONTS:rpi = "fontconfig"
 PACKAGECONFIG:append:rpi = " libinput tslib xkbcommon"
+PACKAGECONFIG:remove:rpi = "tests"
 
 PACKAGECONFIG += " glib" 
 PACKAGECONFIG += " ${@bb.utils.contains('MACHINE_FEATURES', 'vc4graphics', ' kms', '', d)}"
@@ -13,7 +14,7 @@ PACKAGECONFIG += " ${@bb.utils.contains('MACHINE_FEATURES', 'vc4graphics', ' kms
 OE_QTBASE_EGLFS_DEVICE_INTEGRATION:rpi = "${@bb.utils.contains('MACHINE_FEATURES', 'vc4graphics', 'eglfs_kms', 'eglfs_brcm', d)}"
 
 # Set additional specs for the raspberry pi
-do_configure:prepend() {
+do_configure:prepend:rpi() {
     cat > ${S}/mkspecs/oe-device-extra.pri << EOF
     # Preferred backend
     QT_QPA_DEFAULT_PLATFORM = eglfs
