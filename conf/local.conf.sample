@@ -96,55 +96,51 @@ PACKAGECONFIG:append:pn-qemu-system-native = " sdl"
 CONF_VERSION = "2"
 
 # Custom yocto tweaks
+## Enable Systemd
+DISTRO_FEATURES:append = " systemd"
+INIT_MANAGER = "systemd"
+
+## Enable rpi4 graphics
 MACHINE_FEATURES:append = " vc4graphics"
 DISTRO_FEATURES:remove = "x11 wayland vulkan ptest"
 
-PREFERRED_VERSION_linux-raspberrypi = "5.15.%"
+#PREFERRED_VERSION_linux-raspberrypi = "5.15.%"
 IMAGE_FSTYPES = "wic.bz2 wic.bmap tar.zst ext4"
 
 ## Raspberry Pi 4 configuration (stored in config.txt)
+DISABLE_SPLASH = "1"
 DISABLE_OVERSCAN = "1"
 HDMI_DRIVE = "2"
+ENABLE_GPIO_SHUTDOWN = "1"
 #DISPLAY_ROTATE
 #HDMI_FORCE_HOTPLUG = "1" 
 #HDMI_MODE = ""
 
 ## Release packages
-IMAGE_INSTALL:append = " qtbase qtsvg packagegroup-fonts-truetype breeze-icons"
+IMAGE_INSTALL:append = " qtbase qtsvg packagegroup-fonts-truetype"
+IMAGE_INSTALL:append = " qt-cybercraft"
 
 ## Raspberry Pi 4 Firmware
 IMAGE_INSTALL:append = " \
     linux-firmware-rpidistro-bcm43455 \
-    bluez-firmware-rpidistro-bcm4345c0-hcd \
+    linux-firmware-rpidistro-bcm43456 \
 "
 
 ## Enable Wi-Fi drivers
 IMAGE_INSTALL:append = " packagegroup-base-wifi dhcpcd"
-IMAGE_INSTALL:append = " kernel-module-brcmfmac kernel-module-ipv6"
 
 ## Enable GPU drivers
 IMAGE_INSTALL:append = " \
-    kernel-module-v3d kernel-module-vc4 \
-    kernel-module-drm-kms-helper kernel-module-drm-mipi-dbi \
+    kernel-module-v3d \
+    kernel-module-drm-mipi-dbi \
 "
-
-## Enable HDMI audio drivers
-IMAGE_INSTALL:append = " kernel-module-snd-soc-hdmi-codec"
-
-#
-# Enable Broadcom I2C Settop drivers
-# 
-# The I2C set-top box protocol initializes the hdmi ports, allowing the device
-# to dynamically adapt to new monitor input.
-#
-IMAGE_INSTALL:append = " kernel-module-i2c-brcmstb"
 
 ## Development packages
 IMAGE_INSTALL:append = " rsync vim  openssh-sftp-server htop"
-IMAGE_INSTALL:append = " qtconnectivity qtnetworkauth qttools gdb gdbserver"
+IMAGE_INSTALL:append = " gdb gdbserver"
 
 ## Additional KDE modules
-#IMAGE_INSTALL:append = " qt3d qtgraphicaleffects qtcharts qtconnectivity qtdatavis3d \
-#    qtdeclarative qtimageformats qtmultimedia qtquickdesigner-components qtsensors qtserialport qtsvg qttools qttranslations qtvirtualkeyboard qtwebsockets gdb gdbserver qtnetworkauth"
-
-INHERIT+="toaster buildhistory"
+#IMAGE_INSTALL:append = " qt3d qtgraphicaleffects qtcharts qtconnectivity \
+#    qtdatavis3d qtdeclarative qtimageformats qtmultimedia \
+#    qtquickdesigner-components qtsensors qtserialport qtsvg qttools \
+#    qttranslations qtvirtualkeyboard qtwebsockets gdb gdbserver qtnetworkauth"
