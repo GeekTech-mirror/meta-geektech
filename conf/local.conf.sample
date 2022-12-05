@@ -104,21 +104,60 @@ INIT_MANAGER = "systemd"
 MACHINE_FEATURES:append = " vc4graphics"
 DISTRO_FEATURES:remove = "x11 wayland vulkan ptest"
 
-#PREFERRED_VERSION_linux-raspberrypi = "5.15.%"
+## Set image types for yocto build
 IMAGE_FSTYPES = "wic.bz2 wic.bmap tar.zst ext4"
+
+## Enable Wi-Fi drivers
+IMAGE_INSTALL:append = " packagegroup-base-wifi networkmanager dhcpcd"
 
 ## Raspberry Pi 4 configuration (stored in config.txt)
 DISABLE_SPLASH = "1"
-DISABLE_OVERSCAN = "1"
-HDMI_DRIVE = "2"
-ENABLE_GPIO_SHUTDOWN = "1"
-#DISPLAY_ROTATE
-#HDMI_FORCE_HOTPLUG = "1" 
-#HDMI_MODE = ""
+ENABLE_UART="1"
+MPI4008="1"
+
+## Specify which Raspberry Pi overlays to include
+RPI_KERNEL_DEVICETREE_OVERLAYS = " \
+    overlays/overlay_map.dtb \
+    overlays/at86rf233.dtbo \
+    overlays/ads7846.dtbo \
+    overlays/gpio-ir.dtbo \
+    overlays/gpio-ir-tx.dtbo \
+    overlays/gpio-key.dtbo \
+    overlays/gpio-poweroff.dtbo \
+    overlays/gpio-shutdown.dtbo \
+    overlays/i2c0.dtbo \
+    overlays/i2c1.dtbo \
+    overlays/i2c-gpio.dtbo \
+    overlays/i2c-rtc.dtbo \
+    overlays/spi0-0cs.dtbo \
+    overlays/spi0-1cs.dtbo \
+    overlays/rpi-poe.dtbo \
+    overlays/uart0.dtbo \
+    overlays/vc4-fkms-v3d.dtbo \
+    overlays/vc4-fkms-v3d-pi4.dtbo \
+    overlays/vc4-kms-v3d.dtbo \
+    overlays/vc4-kms-v3d-pi4.dtbo \
+"
+
+#
+# Additional Raspberry Pi configuration
+#
+# The `RPI_EXTRA_CONFIG` variable can be used to manually add additional lines to
+# the `config.txt` file . To add multiple lines you must include `\n` separators.
+# If double-quotes are needed in the lines you are adding you can use single
+# quotes around the whole string.
+#
+RPI_EXTRA_CONFIG += '\n \
+# Run as fast firmware / board allows \n\
+arm_boost=1 \n\
+arm_64bit=1 \n\n\
+dtoverlay=gpio-shutdown,gpio_pin=13 \n\
+#dtoverlay=i2c-gpio,i2c_gpio_scl=13, bus=1 \n\
+'
 
 ## Release packages
 IMAGE_INSTALL:append = " qtbase qtsvg packagegroup-fonts-truetype"
-IMAGE_INSTALL:append = " qt-cybercraft"
+IMAGE_INSTALL:append = " qt-cybersecurity-lesson"
 
 ## Raspberry Pi 4 Firmware
 IMAGE_INSTALL:append = " \
@@ -136,8 +175,8 @@ IMAGE_INSTALL:append = " \
 "
 
 ## Development packages
-IMAGE_INSTALL:append = " rsync vim  openssh-sftp-server htop"
-IMAGE_INSTALL:append = " gdb gdbserver"
+#IMAGE_INSTALL:append = " rsync vim  openssh-sftp-server htop net-tools evtest"
+#IMAGE_INSTALL:append = " gdb gdbserver"
 
 ## Additional KDE modules
 #IMAGE_INSTALL:append = " qt3d qtgraphicaleffects qtcharts qtconnectivity \

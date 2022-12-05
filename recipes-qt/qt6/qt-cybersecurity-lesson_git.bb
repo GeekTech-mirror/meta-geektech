@@ -1,4 +1,4 @@
-SUMMARY = "Cybersecurity Lesson in Qt"
+SUMMARY = "Cybersecurity Lessons in Qt"
 DESCRIPTION = "The Cybercraft software is a educational course designed \
 to teach students about different cyber attacks and the importance of \
 online security. The software is designed with a 800x480 display in mind. \
@@ -10,7 +10,7 @@ DEPENDS = "qtbase networkmanager extra-cmake-modules libpcap"
 RDEPENDS:${PN} = "qtsvg packagegroup-fonts-truetype networkmanager libpcap"
 
 SRC_URI = " \
-    git://github.com/GeekTech-mirror/qt-cybercraft.git;branch=dev;protocol=https \
+    git://github.com/GeekTech-mirror/qt-cybersecurity_lesson.git;branch=dev;protocol=https \
     file://cybersecurity_lesson.service"
 SRCREV = "${AUTOREV}"
 S = "${WORKDIR}/git/Cybersecurity_Lesson"

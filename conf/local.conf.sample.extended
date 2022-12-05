@@ -160,15 +160,3 @@ PACKAGECONFIG:append:pn-qemu-system-native = " sdl"
 # this doesn't mean anything to you.
 CONF_VERSION = "2"
 
-#
-# Additional Raspberry Pi configuration
-#
-# The `RPI_EXTRA_CONFIG` variable can be used to manually add additional lines to
-# the `config.txt` file . To add multiple lines you must include `\n` separators.
-# If double-quotes are needed in the lines you are adding you can use single
-# quotes around the whole string.
-#
-#RPI_EXTRA_CONFIG = ' \n \
-#    # Run as fast firmware / board allows \n \
-#    arm_boost=1 \n \
-#'
