@@ -1,8 +1,8 @@
 [Unit]
 Description=Start Cybersecurity Lesson
-Conflicts=getty@tty1.service
-Before=systemd-user-sessions.service getty@tty1.service plymouth-quit.service systemd-logind.service
-After=multi-user.target
+#Conflicts=getty@tty1.service
+#Before=systemd-user-sessions.service getty@tty1.service plymouth-quit.service systemd-logind.service
+After=multi-user.target getty@tty1.service
 
 [Service]
 Type=simple
@@ -12,8 +12,9 @@ Environment=QT_QPA_EGLFS_ALWAYS_SET_MODE=1
 Environment=QT_QPA_EGLFS_HIDECURSOR=1
 ExecStart=/usr/bin/Cybersecurity_Lesson
 StandardOutput=journal
+TTYPath=/dev/tty1
 KillSignal=SIGINT
-Restart=always
+Restart=on-failure
 
 [Install]
 WantedBy=multi-user.target
