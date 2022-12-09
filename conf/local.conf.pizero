@@ -306,7 +306,7 @@ IMAGE_INSTALL:append = " \
     util-linux \
 "
 
-IMAGE_INSTALL:append = " gnupg hostapd iw net-tools"
+IMAGE_INSTALL:append = " gnupg hostapd iw net-tools dhcpcd dnsmasq"
 
 # CONF_VERSION is increased each time build/conf/ changes incompatibly and is used to
 # track the version of this file when it was generated. This can safely be ignored if
