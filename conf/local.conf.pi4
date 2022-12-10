@@ -33,6 +33,32 @@ DISTRO ?= "poky"
 PACKAGE_CLASSES ?= "package_rpm"
 
 #
+# Extra image configuration defaults
+#
+# The EXTRA_IMAGE_FEATURES variable allows extra packages to be added to the generated
+# images. Some of these options are added to certain image types automatically. The
+# variable can contain the following options:
+#  "dbg-pkgs"       - add -dbg packages for all installed packages
+#                     (adds symbol information for debugging/profiling)
+#  "src-pkgs"       - add -src packages for all installed packages
+#                     (adds source code for debugging)
+#  "dev-pkgs"       - add -dev packages for all installed packages
+#                     (useful if you want to develop against libs in the image)
+#  "ptest-pkgs"     - add -ptest packages for all ptest-enabled packages
+#                     (useful if you want to run the package test suites)
+#  "tools-sdk"      - add development tools (gcc, make, pkgconfig etc.)
+#  "tools-debug"    - add debugging tools (gdb, strace)
+#  "eclipse-debug"  - add Eclipse remote debugging support
+#  "tools-profile"  - add profiling tools (oprofile, lttng, valgrind)
+#  "tools-testapps" - add useful testing tools (ts_print, aplay, arecord etc.)
+#  "debug-tweaks"   - make an image suitable for development
+#                     e.g. ssh root access has a blank password
+# There are other application targets that can be used here too, see
+# meta/classes/image.bbclass and meta/classes/core-image.bbclass for more details.
+# We default to enabling the debugging tweaks.
+EXTRA_IMAGE_FEATURES ?= "debug-tweaks"
+
+#
 # Additional image features
 #
 # The following is a list of additional classes to use when building images which
@@ -90,11 +116,6 @@ PACKAGECONFIG:append:pn-qemu-system-native = " sdl"
 # the minimal libsdl built by libsdl2-native then uncomment the ASSUME_PROVIDED line below.
 #ASSUME_PROVIDED += "libsdl2-native"
 
-# CONF_VERSION is increased each time build/conf/ changes incompatibly and is used to
-# track the version of this file when it was generated. This can safely be ignored if
-# this doesn't mean anything to you.
-CONF_VERSION = "2"
-
 # Custom yocto tweaks
 ## Enable Systemd
 DISTRO_FEATURES:append = " systemd"
@@ -108,7 +129,7 @@ DISTRO_FEATURES:remove = "x11 wayland vulkan ptest"
 IMAGE_FSTYPES = "wic.bz2 wic.bmap tar.zst ext4"
 
 ## Enable Wi-Fi drivers
-IMAGE_INSTALL:append = " packagegroup-base-wifi networkmanager dhcpcd"
+IMAGE_INSTALL:append = " packagegroup-base-wifi networkmanager dhcpcd libpcap"
 
 ## Raspberry Pi 4 configuration (stored in config.txt)
 DISABLE_SPLASH = "1"
@@ -161,6 +182,7 @@ IMAGE_INSTALL:append = " qt-cybersecurity-lesson"
 
 ## Raspberry Pi 4 Firmware
 IMAGE_INSTALL:append = " \
+    linux-firmware \
     linux-firmware-rpidistro-bcm43455 \
     linux-firmware-rpidistro-bcm43456 \
 "
@@ -183,3 +205,8 @@ IMAGE_INSTALL:append = " \
 #    qtdatavis3d qtdeclarative qtimageformats qtmultimedia \
 #    qtquickdesigner-components qtsensors qtserialport qtsvg qttools \
 #    qttranslations qtvirtualkeyboard qtwebsockets gdb gdbserver qtnetworkauth"
+
+# CONF_VERSION is increased each time build/conf/ changes incompatibly and is used to
+# track the version of this file when it was generated. This can safely be ignored if
+# this doesn't mean anything to you.
+CONF_VERSION = "2"
