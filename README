@@ -1,41 +1,22 @@
-This README file contains information on the contents of the meta-cybercraft layer.
-
-Please see the corresponding sections below for details.
+Yocto layer for building a Raspberry Pi image with the GeekTech Cybersecurity Lesson.
 
 Dependencies
 ============
+  URI: git://git.yoctoproject.org/poky 
+  branch: kirkstone
 
-  URI: <first dependency>
-  branch: <branch name>
+  URI: git://git.openembedded.org/meta-openembedded
+  branch: kirkstone
 
-  URI: <second dependency>
-  branch: <branch name>
+  URI: git://git.yoctoproject.org/meta-raspberrypi
+  branch: kirkstone
+  
+  URI: git://code.qt.io/yocto/meta-qt6.git
+  branch: 6.4
 
-  .
-  .
-  .
-
-Patches
-=======
-
-Please submit any patches against the meta-cybercraft layer to the xxxx mailing list (xxxx@zzzz.org)
-and cc: the maintainer:
-
-Maintainer: XXX YYYYYY <xxx.yyyyyy@zzzzz.com>
-
-Table of Contents
+Build Instructions
 =================
+Instructions for building the PenPi image can be found [here](https://github.com/GeekTech-mirror/meta-geektech/wiki#build).
 
-  I. Adding the meta-cybercraft layer to your build
- II. Misc
+[Layer Recipes](https://github.com/GeekTech-mirror/meta-geektech/wiki/Recipes)
 
-
-I. Adding the meta-cybercraft layer to your build
-=================================================
-
-Run 'bitbake-layers add-layer meta-cybercraft'
-
-II. Misc
-========
-
---- replace with specific information about the meta-cybercraft layer ---
